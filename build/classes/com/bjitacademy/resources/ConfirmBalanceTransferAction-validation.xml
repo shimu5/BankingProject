@@ -1,0 +1,26 @@
+<!DOCTYPE validators PUBLIC
+"-//Apache Struts//XWork Validator 1.0.2//EN"
+"http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+<validators>
+	<field name="toAccount">
+		<field-validator type="required" short-circuit="true">
+			<message>Account Number is required!</message>
+		</field-validator>		
+	</field>
+	
+	<field name="toAccountHolderName">
+		<field-validator type="required" short-circuit="true">
+			<message>Account Holder Name Required</message>
+		</field-validator>
+	</field>
+	<field name="transferAmount">
+		<field-validator type="required">
+			<message>Amount Required</message>
+		</field-validator>
+	</field>
+	<field name="remarks">
+		<field-validator type="required">
+			<message>Reason Required</message>
+		</field-validator>
+	</field>
+</validators>

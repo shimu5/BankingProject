@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bjitacademy.finalproject.domains" default-lazy="false">
+	<class name="InterestRate" table="InterestRate" >		
+		<id name="accountType" type="integer" column="AccountType" >
+			<generator class="native" />
+		</id>
+			
+		<property name="annualInterestRate" column="AnnualInterestRate" type="integer" />	
+		<!--<one-to-one name="bankAccount" class="BankAccount" property-ref="bankAccountType"/>
+		<list name="persons" inverse="true" cascade="all,delete-orphan">
+	      <key column="contactid"/>
+	      <one-to-many class="HibernateJoin.Person"/>
+      	</list>-->
+		<list name="banklist" cascade="all,delete-orphan">  
+	          <key column="bankAccountType"></key>  
+	          <index column="bankAccNumber"></index>  
+	          <one-to-many class="BankAccountInterest"/>  
+		</list> 
+	</class>
+</hibernate-mapping>

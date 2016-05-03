@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bjitacademy.finalproject.domains" default-lazy="false">
+	<class name="AccountTransferHistory" table="AccountTransferHistory" dynamic-update="true" dynamic-insert="true">		
+		<id name="transferId" type="integer" column="TransferId">
+			<generator class="sequence">
+				<param name="sequence">S_AccountTransferHistory_id</param>
+			</generator>
+		</id>
+		<property name="fromAccount" column="FromAccount" type="integer" />
+		<property name="toAccount" column="ToAccount" type="integer" />
+		<property name="actionDate" column="ActionDate" type="date" />
+		<property name="transferType" column="TransferType" type="string" />	
+		<property name="remarks" column="Reason" type="string" />	
+		<property name="Amount" column="amount" type="big_decimal" />	
+				
+	</class>
+</hibernate-mapping>

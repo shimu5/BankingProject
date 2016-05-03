@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bjitacademy.finalproject.domains" default-lazy="false">
+	<class
+		name="BankAccount"
+		table="BankAccount">
+		<id name="bankAccNumber" type="integer" unsaved-value="null" column="BankAccNumber">
+			<generator class="sequence">
+				<param name="sequence">S_BankAccount_id</param>
+			</generator>
+		</id>
+		
+		<property name="bankAccountType" column="BankAccountType" type="integer" />
+		<property name="accountHolderName" column="AccountHolderName" type="string" />
+		<property name="fatherName" column="FatherName" type="string" />
+		<property name="motherName" column="MotherName" type="string" />
+		<property name="permanentAddress" column="PermanentAddress" type="string" />
+		<property name="currentAddress" column="CurrentAddress" type="string" />
+		<property name="contactNumber" column="ContactNumber" type="string" />
+		<property name="emailAddress" column="EmailAddress" type="string" />
+		<property name="occupation" column="Occupation" type="string" />
+		<property name="nid_pin" column="NID_PN" type="string" />
+		<property name="currency" column="Currency" type="string" />
+		<property name="yearlyIncome" column="YearlyIncome" type="double" />
+		<property name="balance" column="Balance" type="double" />
+		<property name="activeStatus" column="ActiveStatus" type="string" />		
+		<many-to-one name="userAccount" 
+			class="UserAccount"
+			column="UserAccountId" cascade="all" unique="true" fetch="join"/>
+	</class>
+
+	<class name="UserAccount" table="UserAccount">
+		<id name="UserAccountId" column="UserAccountId">
+			<generator class="sequence">
+				<param name="sequence">S_UserAccount_id</param>
+			</generator>
+		</id>		
+		<property name="LoginId" column="LoginId" type="string" />
+		<property name="Password" column="Password" type="string" />
+		<property name="LoginType" column="LoginType" type="string" />
+		<property name="bankAccNumber" column="BankAccNumber" type="integer" />
+		<one-to-one name="bankaccnt" class="BankAccount" property-ref="userAccount" />
+	</class>
+</hibernate-mapping>

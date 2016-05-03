@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+                           http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.0.xsd">
+                           
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+		<property name="username" value="finalproject" />
+		<property name="password" value="finalproject" />
+	</bean>
+	<bean id="Authdao" class="com.bjitacademy.finalproject.dao.JdbcAuthDao">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+		
+	<!-- write code here to create  hibernateSessionFactory-->
+	<bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingLocations">
+			<list>
+				<value>classpath*:/com/bjitacademy/finalproject/dao/BankAccount.hbm.xml</value>
+				<value>classpath*:/com/bjitacademy/finalproject/dao/UserAccount.hbm.xml</value>
+				<value>classpath*:/com/bjitacademy/finalproject/dao/LedgerAccount.hbm.xml</value>			
+				<value>classpath*:/com/bjitacademy/finalproject/dao/InterestRate.hbm.xml</value> 
+				<value>classpath*:/com/bjitacademy/finalproject/dao/Beneficiary.hbm.xml</value>
+				<value>classpath*:/com/bjitacademy/finalproject/dao/AccountTransferHistory.hbm.xml</value>
+				<value>classpath*:/com/bjitacademy/finalproject/dao/BeneficiaryGroup.hbm.xml</value>
+				
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="bankAccountDao"
+		class="com.bjitacademy.finalproject.dao.BankAccountHibernateDao">
+	   <constructor-arg ref="hibernateSessionFactory" />
+	</bean>
+	
+	<bean id="loginAction" class="com.bjitacademy.finalproject.action.LoginAction" >
+		<property name="userAuthDao" ref="Authdao" />
+		<property name="bankAccountDao" ref="bankAccountDao" />
+	</bean>
+	
+	<bean id="interestRateDao"
+		class="com.bjitacademy.finalproject.dao.InterestRateHibernateDao">
+	   <constructor-arg ref="hibernateSessionFactory" />
+	</bean>
+		
+	<bean id="ledgerAccountDao"
+		class="com.bjitacademy.finalproject.dao.LedgerAccountHibernateDao">
+	   <constructor-arg ref="hibernateSessionFactory" />
+	</bean>
+	
+	<bean id="accnTransHistoryDao"
+		class="com.bjitacademy.finalproject.dao.AccountTransferHistoryHibernateDao">
+	   <constructor-arg ref="hibernateSessionFactory" />
+	</bean>
+	
+	<bean id="benefGroupDao"
+		class="com.bjitacademy.finalproject.dao.BeneficiaryGroupHibernateDao">
+	   <constructor-arg ref="hibernateSessionFactory" />
+	</bean>
+	
+	
+	<bean id="bankaccountService"
+		class="com.bjitacademy.finalproject.service.BankAccountService">
+		<property name="dao" ref="bankAccountDao"/>
+	</bean>
+	
+	<bean id="beneficiaryDao"
+		class="com.bjitacademy.finalproject.dao.BeneficiaryHibernateDao">
+	   <constructor-arg ref="hibernateSessionFactory" />
+	</bean>
+
+	<bean name="ConfirmCreateAccount"
+		class="com.bjitacademy.finalproject.action.ConfirmCreateAccountAction">
+		<property name="accountService" ref="bankaccountService" />
+	</bean>
+	<bean name="accountSearchResult"
+		class="com.bjitacademy.finalproject.action.AccountSearchResultAction">
+		<property name="accountService" ref="bankaccountService" />
+	</bean>
+	<bean name="ModifyAccount"
+		class="com.bjitacademy.finalproject.action.ModifyAccountAction">
+		<property name="accountService" ref="bankaccountService" />
+	</bean>
+	
+	<bean name="successModifyingAccount"
+		class="com.bjitacademy.finalproject.action.SuccessModifyingAccountAction">
+		<property name="accountService" ref="bankaccountService" />
+	</bean>	
+	
+	<bean id="accntInterestService"
+		class="com.bjitacademy.finalproject.service.AccountInterestService">		
+		<property name="interestDao" ref="interestRateDao"/>			
+	</bean>
+		
+	<bean name="calculateInterest"
+		class="com.bjitacademy.finalproject.action.CalculateInterestAction">
+		<property name="interestService" ref="accntInterestService" />		
+	</bean>
+	
+	<bean name="continueToInterestCalculation"
+		class="com.bjitacademy.finalproject.action.CalculateInterestAction">
+		<property name="interestService" ref="accntInterestService" />		
+	</bean>
+	
+	<bean id="bankAccountInterstDao"
+		class="com.bjitacademy.finalproject.dao.BankAccountInterestHibernateDao">
+	   <constructor-arg ref="hibernateSessionFactory" />
+	</bean>
+	
+	<bean id="interestCalculateService"
+		class="com.bjitacademy.finalproject.service.DefaultInterestCalculateService">		
+		<property name="interestDao" ref="interestRateDao"/>
+		<property name="ledgerDao" ref="ledgerAccountDao"/>	
+		<property name="accountInterstDao" ref="bankAccountInterstDao"/>	
+		<property name="transactionManager" ref="transactionManager" />			
+	</bean>
+	
+	<bean name="confirmInterestCalculation"
+		class="com.bjitacademy.finalproject.action.ConfirmInterestCalculationAction">
+		<property name="interestCalService" ref="interestCalculateService" />	
+	</bean> 
+	
+	<bean id="LedgerDefaultService"
+		class="com.bjitacademy.finalproject.service.LedgerAccountDefaultService">
+		<property name="ledgerDao" ref="ledgerAccountDao"/>		
+	</bean>	
+	
+	<bean name="viewAccountSummary"
+		class="com.bjitacademy.finalproject.action.AccountSummaryAction">
+		<property name="ledgerserv" ref="LedgerDefaultService" />
+	</bean> 
+		
+	<bean name="ledgerAccountDetail"
+		class="com.bjitacademy.finalproject.action.LedgerAccountDetailAction">
+		<property name="ledgerserv" ref="LedgerDefaultService" />
+	</bean> 
+	
+	
+	<bean name="continueBeneficiary"
+		class="com.bjitacademy.finalproject.action.ContinueBeneficiaryAction">
+		<property name="accountService" ref="bankaccountService" />
+	</bean> 
+	
+	<bean id="beneficService"
+		class="com.bjitacademy.finalproject.service.BeneficiaryService">
+		<property name="beneficiaryDao" ref="beneficiaryDao"/>		
+	</bean>	
+	
+	<bean name="confirmBeneficiary"
+		class="com.bjitacademy.finalproject.action.ConfirmBeneficiaryAction">
+		<property name="beneficiaryService" ref="beneficService" />
+	</bean>
+	
+	<bean name="beneficiaryList"
+		class="com.bjitacademy.finalproject.action.BeneficiaryListAction">
+		<property name="beneficiaryService" ref="beneficService" />
+	</bean> 
+		
+	<bean name="accountBalanceTransfer"
+		class="com.bjitacademy.finalproject.action.AccountBalanceTransferAction">
+		<property name="beneficiaryService" ref="beneficService" />
+	</bean> 
+	
+	<bean name="bankAccountInfo"
+		class="com.bjitacademy.finalproject.action.BankAccountInfoAction">
+		<property name="accountService" ref="bankaccountService" />
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="bankService" class="com.bjitacademy.finalproject.service.ProgrammaticTxBankService">
+		
+		<property name="accountDao" ref="bankAccountDao" />
+		<property name="ledgerDao" ref="ledgerAccountDao"/>
+		<property name="beneficiaryDao" ref="beneficiaryDao"/>
+		<property name="transHistoryDao" ref="accnTransHistoryDao" />
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	   	
+	<bean name="confirmBalanceTransfer"
+		class="com.bjitacademy.finalproject.action.ConfirmBalanceTransferAction">
+		<property name="bankService" ref="bankService" />
+		
+	</bean> 
+	
+	<bean id="ledgerAccountService"
+		class="com.bjitacademy.finalproject.service.LedgerAccountService">
+		<property name="ledgerDao" ref="ledgerAccountDao"/>
+		<property name="accountDao" ref="bankAccountDao"/>		
+		<property name="transactionManager" ref="transactionManager" />
+			
+	</bean>	
+	
+	<bean name="confirmDepositAmount"
+		class="com.bjitacademy.finalproject.action.ConfirmDepositAmountAction">
+		<property name="ledgerService" ref="ledgerAccountService" />		
+	</bean>
+
+	<bean name="confirmWithdrawAmount"
+		class="com.bjitacademy.finalproject.action.ConfirmWithdrawAmountAction">
+		<property name="ledgerService" ref="ledgerAccountService" />		
+	</bean>
+	
+	<bean id="historyService"
+		class="com.bjitacademy.finalproject.service.TransferHistoryService">
+		<property name="transHistoryDao" ref="accnTransHistoryDao" />		
+	</bean>	
+	
+	<bean name="accountTransferHistory"
+		class="com.bjitacademy.finalproject.action.AccountTransferHistoryAction">
+		<property name="transHistoryService" ref="historyService" />
+	</bean>
+	
+	
+	<bean name="createBeneficiaryGroup"
+		class="com.bjitacademy.finalproject.action.CreateBeneficiaryGroupAction">
+		<property name="beneficiaryService" ref="beneficService" />
+	</bean>
+	
+	<bean id="benefGroupService"
+		class="com.bjitacademy.finalproject.service.BeneficiaryGroupService">
+		<property name="beneficiaryGroupDao" ref="benefGroupDao" />		
+	</bean>	
+	
+	<bean name="confirmBeneficiaryGroup"
+		class="com.bjitacademy.finalproject.action.ConfirmBeneficiaryGroupAction">
+		<property name="beneficGroupService" ref="benefGroupService" />
+	</bean>
+	
+	<bean name="listBeneficiaryGroup"
+		class="com.bjitacademy.finalproject.action.ListBeneficiaryGroupAction">
+		<property name="beneficGroupService" ref="benefGroupService" />
+	</bean>
+	
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+</beans>
+

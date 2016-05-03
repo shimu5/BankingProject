@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bjitacademy.finalproject.domains" default-lazy="false">
+	<class name="LedgerAccount" table="LedgerAccount" dynamic-update="true" dynamic-insert="true">		
+		<id name="ledgerId" type="integer" column="LedgerId">
+			<generator class="sequence">
+				<param name="sequence">S_LedgerAccount_id</param>
+			</generator>
+		</id>
+		<property name="bankAccNumber" column="BankAccNumber" type="integer" />
+		<property name="ledgerDate" column="LedgerDate" type="date" />
+		<property name="refInfo" column="RefInfo" type="string" />	
+		<property name="description" column="Description" type="string" />	
+		<property name="depositAmount" column="DepositAmount" type="big_decimal" />	
+		<property name="widrawAmount" column="WidrawAmount" type="big_decimal" />	
+		<property name="interestAmount" column="InterestAmount" type="big_decimal" />
+		<many-to-one class="BankAccountLedger" name="bankAccountledger" column="bankAccNumber" />		
+	</class>
+</hibernate-mapping>

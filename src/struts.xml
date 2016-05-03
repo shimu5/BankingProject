@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.custom.i18n.resources" value="com.bjitacademy.resources.global" />
+	<constant name="struts.devMode" value="true" />
+	<package name="front" namespace="/" extends="struts-default">
+		<result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+		
+		<interceptors>			
+			<interceptor name="authentication" class="com.bjitacademy.finalproject.action.AuthenticationInterceptor" />
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="authentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>				
+    	   </interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="authStack" />
+		
+		
+		<global-results>
+			<result name="login" type="redirect">/login.action</result>
+		</global-results>
+		
+		<action name="login" >
+			<interceptor-ref name="defaultStack"/>			
+			<result name="success" type="tiles">LoginPage</result>
+			<result name="input" type="tiles">LoginPage</result>
+		</action>
+		
+		<action name="validateUser" class="loginAction">
+			<interceptor-ref name="defaultStack"/>
+					
+			<result name="UserHome" type="redirect">user/home.action</result>
+			<result name="AdminHome" type="redirect">admin/home.action</result>
+			<result name="LoginFailure" type="tiles">LoginPage</result>
+			<result name="input" type="tiles">LoginPage</result>
+		</action>
+		
+		<action name="home">
+			<interceptor-ref name="authStack"/>		
+			<result name="AdminHome" type="redirect">admin/home.action</result>
+			<result name="UserHome" type="redirect">user/home.action</result>			
+			<result name="login" type="tiles">LoginPage</result>
+		</action>				
+		
+		<action name="locale" class="com.bjitacademy.finalproject.action.LocaleSelectAction">	
+			<interceptor-ref name="defaultStack"/>		
+			<result name="SUCCESS" type="tiles">LoginPage</result>
+			<result name="success" type="tiles">LoginPage</result>	
+			<result name="input" type="tiles">LoginPage</result>			
+		</action>	
+		
+		<action name="CreateAccount" class="com.bjitacademy.finalproject.action.CreateAccountAction">
+			<interceptor-ref name="defaultStack"/>			
+			<result name="SUCCESS" type="tiles">CreateAccount</result>					
+		</action>
+		
+		<action name="ContinueCreateAccount" class="com.bjitacademy.finalproject.action.ContinueCreateAccountAction">
+			<interceptor-ref name="defaultStack"/>			
+			<result name="SUCCESS" type="tiles">ContinueCreateAccount</result>	
+			<result name="input" type="tiles">CreateAccount</result>		
+		</action>
+				
+		<action name="ConfirmCreateAccount" class="ConfirmCreateAccount">
+			<interceptor-ref name="defaultStack"/>			
+			<result name="SUCCESS" type="tiles">SuccessCreatingAccount</result>	
+			<result name="input" type="tiles">CreateAccount</result>		
+		</action>
+	</package>
+
+	<!-- ===========================Admin Package======================== -->
+	<package name="admin" namespace="/admin" extends="struts-default">
+		<result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+
+		<interceptors>
+			<interceptor name="authentication"
+				class="com.bjitacademy.finalproject.action.AuthenticationInterceptor" />
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="authentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="authStack" />
+
+		<global-results>
+			<result name="login" type="redirect">/login.action</result>
+		</global-results>
+
+		<action name="login">
+			<interceptor-ref name="defaultStack" />
+			<result>/pages/Login.jsp</result>
+		</action>
+
+		<action name="validateUser" class="loginAction">
+			<interceptor-ref name="defaultStack" />
+			<result name="AdminHome" type="redirect">admin/home.action</result>
+			<result name="input">/pages/Login.jsp</result>
+		</action>
+
+		<action name="home">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">AdminWelcome</result>
+		</action>
+		<action name="Logout" class="loginAction" method="Logout">
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="redirect">/login.action</result>			
+		</action>
+		<action name="SearchAccount" >
+			<interceptor-ref name="authStack" />
+			<result type="tiles">AccountSearch</result>	
+		</action>
+		<action name="AccountSearchResult" class="accountSearchResult" >
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">AccountSearchResult</result>	
+			<result type="tiles" name="failure">AccountSearch</result>	
+		</action>
+		<action name="ModifyAccount" class="ModifyAccount" >
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">BankAccountEdit</result>					
+		</action>
+		
+		<action name="ContinueModifyAccount" class="com.bjitacademy.finalproject.action.ContinueModifyAccountAction" >
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">ContinueModifyAccount</result>		
+			<result type="tiles" name="input">BankAccountEdit</result>			
+		</action>
+		
+		<action name="SuccessModifyingAccount" class="successModifyingAccount" >
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">SuccessModifyingAccount</result>
+			<result type="tiles" name="failure">BankAccountEdit</result>				
+		</action>
+		
+		<action name="DeleteAccount" class="ModifyAccount" method="executeDelete">
+			<interceptor-ref name="authStack" />
+			<result name="success" type="redirect">SearchAccount.action</result>						
+		</action>
+		
+		<action name="DepositAmount" >
+			<interceptor-ref name="authStack" />
+			<result type="tiles">DepositAmount</result>	
+		</action>
+		
+		<action name="ContinueToDepositAmount" class="com.bjitacademy.finalproject.action.ContinueToDepositAmountAction">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">ContinueToDepositAmount</result>	
+			<result type="tiles" name="input">DepositAmount</result>	
+		</action>
+		
+		<action name="ConfirmDepositAmount" class="confirmDepositAmount">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">SuccessDepositAmount</result>	
+			<result type="tiles" name="failure">DepositAmount</result>	
+		</action>
+		
+		<action name="WithdrawAmount" >
+			<interceptor-ref name="authStack" />
+			<result type="tiles">WithdrawAmount</result>	
+		</action>
+		
+		<action name="ContinueToWithdrawAmount" class="com.bjitacademy.finalproject.action.ContinueToWithdrawAmountAction">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">ContinueToWithdrawAmount</result>
+			<result type="tiles" name="failure">WithdrawAmount</result>
+		</action>
+		
+		<action name="ConfirmWithdrawAmount" class="confirmWithdrawAmount">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">ConfirmWithdrawAmount</result>
+			<result type="tiles" name="failure">WithdrawAmount</result>	
+		</action>		
+		
+		<action name="CalculateInterest" class="calculateInterest">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">CalculateInterest</result>			
+		</action>	
+		<action name="ContinueToInterestCalculation" class="continueToInterestCalculation">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">continueInterestCalc</result>			
+		</action>	
+		<action name="ConfirmInterestCalculation" class="confirmInterestCalculation">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">successInterestCalculation</result>		
+			<result type="tiles" name="failure">CalculateInterest</result>		
+		</action>	
+	</package>
+	
+	<!--     =========================user Package=========================================  -->
+	<package name="user" namespace="/user" extends="struts-default,json-default">
+		<result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+		<interceptors>
+			<interceptor name="authentication"
+				class="com.bjitacademy.finalproject.action.AuthenticationInterceptor" />
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="authentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="authStack" />
+
+		<global-results>
+			<result name="login" type="redirect">/login.action</result>
+		</global-results>
+
+		<action name="login">
+			<interceptor-ref name="defaultStack" />
+			<result>/pages/Login.jsp</result>
+		</action>
+
+		<action name="validateUser" class="loginAction">
+			<interceptor-ref name="defaultStack" />
+			<result name="UserHome" type="redirect">user/home.action</result>
+			<result name="input">/pages/Login.jsp</result>
+		</action>
+
+		<action name="home">
+			<interceptor-ref name="authStack" />			
+			<result type="tiles" name="success">UserWelcome</result>
+		</action>
+		
+		<action name="Logout" class="loginAction" method="Logout">
+			<interceptor-ref name="authStack" />
+			<result name="success" type="redirect">/login.action</result>
+			<result name="input" type="redirect">/login.action</result>			
+		</action>
+		
+		
+		<action name="ViewSummary" class="viewAccountSummary">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">viewAccountSummary</result>					
+		</action>
+		
+		<action name="ledgerAccount" class="ledgerAccountDetail">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">ledgerAccountDetail</result>					
+		</action>
+		
+		<action name="CreateBeneficiary" class="com.bjitacademy.finalproject.action.CreateBeneficiaryAction">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">CreateBeneficiary</result>					
+		</action>
+		
+		<action name="ContinueBeneficiary" class="continueBeneficiary">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">ContinueBeneficiary</result>	
+			<result type="tiles" name="input">CreateBeneficiary</result>					
+		</action> 
+		
+		<action name="ConfirmBeneficiary" class="confirmBeneficiary">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">confirmBeneficiary</result>	
+			<result type="tiles" name="failure">CreateBeneficiary</result>					
+		</action> 
+		
+		<action name="BeneficiaryList" class="beneficiaryList">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">beneficiaryList</result>							
+		</action> 
+		
+		<action name="DeleteBeneficiary" class="beneficiaryList" method="removeBeneficiary">
+			<interceptor-ref name="authStack" />
+			<result type="redirect" name="success">BeneficiaryList.action</result>							
+		</action>
+		
+		<action name="AccountBalanceTransfer" class="accountBalanceTransfer">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">balanceTransfer</result>							
+		</action>
+		
+		<action name="BankAccountInfo" class="bankAccountInfo"  >
+			<interceptor-ref name="authStack" />
+			<interceptor-ref name="json">
+            	<param name="enableSMD">true</param>
+        	</interceptor-ref>
+			<result type="json" />		
+		</action>
+		
+		<action name="ConfirmBalanceTransfer" class="confirmBalanceTransfer">
+			<interceptor-ref name="authStack" />
+			<result  name="success" type="tiles">confirmBalanceTransfer</result>	
+			<result  name="input" type="tiles">balanceTransfer</result>						
+		</action> 
+		
+		<action name="AccountTransferHistory" class="accountTransferHistory">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">accountTransferHistory</result>							
+		</action>
+		
+		<action name="CreateBeneficiaryGroup" class="createBeneficiaryGroup">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">createBeneficiaryGroup</result>							
+		</action>
+		
+		<action name="ContinueBeneficiaryGroup" class="com.bjitacademy.finalproject.action.ContinueBeneficiaryGroupAction">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">continueBeneficiaryGroup</result>							
+		</action>
+		
+		
+		<action name="ConfirmBeneficiaryGroup" class="confirmBeneficiaryGroup">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">confirmBeneficiaryGroup</result>							
+		</action>
+		
+		<action name="ListBeneficiaryGroup" class="listBeneficiaryGroup">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">listBeneficiaryGroup</result>							
+		</action>
+		
+		
+		
+		<action name="BillPayment" class="com.bjitacademy.finalproject.action.BillPaymentAction">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">BillPayment</result>							
+		</action>
+		
+		<action name="BillPaymentHistory" class="com.bjitacademy.finalproject.action.BillPaymentHistoryAction">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">BillPaymentHistory</result>							
+		</action>
+		
+		<action name="AccountBalanceTransferGroup" class="com.bjitacademy.finalproject.action.AccountBalanceTransferGroupAction">
+			<interceptor-ref name="authStack" />
+			<result type="tiles" name="success">AccountBalanceTransferGroup</result>							
+		</action>
+		
+	</package>
+	
+	
+</struts>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bjitacademy.finalproject.domains" default-lazy="false">
+	<class name="Beneficiary" table="Beneficiary"  dynamic-update="true" dynamic-insert="true">		
+		<id name="beneficiaryId" type="integer" column="BeneficiaryId">
+			<generator class="sequence">
+				<param name="sequence">S_Beneficiary_id</param>
+			</generator>
+		</id>			
+		<property name="userBankAccountNumber" column="UserBankAccountNumber" type="java.lang.Integer" />	
+		<property name="bankAccNumber" column="BankAccNumber" type="java.lang.Integer" />	
+		<property name="aliasName" column="AliasName" type="string" />	
+		<property name="accountHolderName" column="AccountHolderName" type="string" />	
+		<property name="emailId" column="EmailId" type="string" />	
+		<property name="mobileNumber" column="MobileNumber" type="string" />	
+		<property name="amount" column="Amount" type="big_decimal" />			
+ 		<many-to-one class="BankAccountBeneficiary" name="bankAccntBenefic" column="userBankAccountNumber" insert="false" update="false"/>	
+ 		<!--  <set name="beneficiarygrp" inverse="false" lazy="true" fetch="select" cascade="delete" >
+			<key column="aliasName"/>
+			<one-to-many class="BeneficiaryGroup"/>
+        </set> --> 		
+	</class>
+	
+</hibernate-mapping>

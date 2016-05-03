@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+<definition name="frontLayout" template="/template/frontLayout.jsp">
+ 	<put-attribute name="title" value="" />
+ 	<put-attribute name="header" value="/template/header.jsp" /> 	
+ 	<put-attribute name="body" value="/template/body.jsp" />
+ 	<put-attribute name="footer" value="/template/front_footer.jsp" />
+ </definition>
+ 
+ <definition name="userLayout" template="/template/baseLayout.jsp">
+ 	<put-attribute name="title" value="" />
+ 	<put-attribute name="header" value="/template/header.jsp" />
+ 	<put-attribute name="menu" value="/template/user_menu.jsp" />
+ 	<put-attribute name="body" value="/template/body.jsp" />
+ 	<put-attribute name="footer" value="/template/footer.jsp" />
+ </definition>
+ 
+ 
+ <definition name="adminLayout" template="/template/baseLayout.jsp">
+ 	<put-attribute name="title" value="" />
+ 	<put-attribute name="header" value="/template/header.jsp" />
+ 	<put-attribute name="menu" value="/template/admin_menu.jsp" />
+ 	<put-attribute name="body" value="/template/body.jsp" />
+ 	<put-attribute name="footer" value="/template/footer.jsp" />
+ </definition>
+ 
+ <definition name="LoginPage" extends="frontLayout">
+ 	<put-attribute name="title" value="Login" />
+ 	<put-attribute name="body" value="/pages/Login.jsp" />
+ </definition>
+ 
+ <definition name="CreateAccount" extends="frontLayout">
+ 	<put-attribute name="title" value="Create Account" />
+ 	<put-attribute name="body" value="/pages/CreateAccount.jsp" />
+ </definition>
+ 
+ <definition name="ContinueCreateAccount" extends="frontLayout">
+ 	<put-attribute name="title" value="Continue Create Account" />
+ 	<put-attribute name="body" value="/pages/ContinueCreatingAccount.jsp" />
+ </definition>
+ 
+ <definition name="SuccessCreatingAccount" extends="frontLayout">
+ 	<put-attribute name="title" value="Continue Create Account" />
+ 	<put-attribute name="body" value="/pages/SuccessCreatingAccount.jsp" />
+ </definition>
+ 
+ <definition name="AdminWelcome" extends="adminLayout">
+ 	<put-attribute name="title" value="Admin Home" />
+ 	<put-attribute name="body" value="/pages/welcome.jsp" />
+ </definition>
+ 
+  <definition name="AccountSearch" extends="adminLayout">
+ 	<put-attribute name="title" value="Admin : Search Account " />
+ 	<put-attribute name="body" value="/pages/AccountSearch.jsp" />
+ </definition>
+ 
+	 <definition name="AccountSearchResult" extends="adminLayout">
+		<put-attribute name="title" value="Admin : Search Account Result " />
+		<put-attribute name="body" value="/pages/AccountInfoList.jsp" />
+	</definition>
+ 
+	 <definition name="BankAccountEdit" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Account Edit " />
+	 	<put-attribute name="body" value="/pages/ModifyAccount.jsp" />
+	 </definition>
+	 
+	 <definition name="ContinueModifyAccount" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Account Edit " />
+	 	<put-attribute name="body" value="/pages/ContinueModifyingAccount.jsp" />
+	 </definition>
+	 
+	 <definition name="SuccessModifyingAccount" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Modify Account " />
+	 	<put-attribute name="body" value="/pages/SuccessModifyingAccount.jsp" />
+	 </definition>
+ 	<definition name="DepositAmount" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Deposit " />
+	 	<put-attribute name="body" value="/pages/DepositAmount.jsp" />
+	 </definition>
+	 <definition name="ContinueToDepositAmount" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Deposit Confirm " />
+	 	<put-attribute name="body" value="/pages/ContinueToDepositAmount.jsp" />
+	 </definition>
+	 <definition name="SuccessDepositAmount" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Deposit Success " />
+	 	<put-attribute name="body" value="/pages/DepositAmountSuccess.jsp" />
+	 </definition>
+	 <definition name="WithdrawAmount" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Withdraw Amount " />
+	 	<put-attribute name="body" value="/pages/WidrawAmount.jsp" />
+	 </definition>
+	 <definition name="ContinueToWithdrawAmount" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Withdraw Amount " />
+	 	<put-attribute name="body" value="/pages/ContinueToWidrawAmount.jsp" />
+	 </definition>
+	 <definition name="ConfirmWithdrawAmount" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Withdraw Amount " />
+	 	<put-attribute name="body" value="/pages/WidrawAmountSuccess.jsp" />
+	 </definition>
+	 
+	 <definition name="CalculateInterest" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Interest Calculation" />
+	 	<put-attribute name="body" value="/pages/InterestCalculation.jsp" />
+	 </definition>
+	 
+	 <definition name="continueInterestCalc" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Interest Calculation" />
+	 	<put-attribute name="body" value="/pages/ContinueToInterestCalculation.jsp" />
+	 </definition>
+	 <definition name="successInterestCalculation" extends="adminLayout">
+	 	<put-attribute name="title" value="Admin : Interest Calculation" />
+	 	<put-attribute name="body" value="/pages/SuccessToInterestCalculation.jsp" />
+	 </definition>
+	 
+	 
+	<definition name="UserWelcome" extends="userLayout">
+		<put-attribute name="title" value="User Home" />
+		<put-attribute name="body" value="/pages/welcome.jsp" />
+	</definition>
+
+	<definition name="viewAccountSummary" extends="userLayout">
+		<put-attribute name="title" value="User : Account Summary" />
+		<put-attribute name="body" value="/pages/AccountSummery.jsp" />		
+	</definition>
+	 
+	<definition name="ledgerAccountDetail" extends="userLayout">
+		<put-attribute name="title" value="User :Ledger Account Detail" />
+		<put-attribute name="body" value="/pages/LedgerAccount.jsp" />		
+	</definition>
+	
+	<definition name="CreateBeneficiary" extends="userLayout">
+		<put-attribute name="title" value="User :Create Beneficiary" />
+		<put-attribute name="body" value="/pages/CreateBeneficiary.jsp" />		
+	</definition>
+	
+	<definition name="ContinueBeneficiary" extends="userLayout">
+		<put-attribute name="title" value="User :Create Beneficiary" />
+		<put-attribute name="body" value="/pages/ContinueCreateBeneficiary.jsp" />		
+	</definition>
+	
+	<definition name="confirmBeneficiary" extends="userLayout">
+		<put-attribute name="title" value="User :Create Beneficiary" />
+		<put-attribute name="body" value="/pages/ConfirmCreateBeneficiary.jsp" />		
+	</definition> 
+	
+	 <definition name="beneficiaryList" extends="userLayout">
+		<put-attribute name="title" value="User : Beneficiary List" />
+		<put-attribute name="body" value="/pages/BeneficiaryList.jsp" />		
+	</definition> 
+	
+	<definition name="balanceTransfer" extends="userLayout">
+		<put-attribute name="title" value="User : Account Balance Transfer" />
+		<put-attribute name="body" value="/pages/AccountBalanceTransfer.jsp" />		
+	</definition>
+	
+	<definition name="confirmBalanceTransfer" extends="userLayout">
+		<put-attribute name="title" value="User : Success Account Balance Transfer" />
+		<put-attribute name="body" value="/pages/SuccessAccountBalanceTransfer.jsp" />		
+	</definition>
+	
+	<definition name="accountTransferHistory" extends="userLayout">
+		<put-attribute name="title" value="User : Transfer Balance History" />
+		<put-attribute name="body" value="/pages/TransferBalanceHistory.jsp" />		
+	</definition>
+	 
+	 <definition name="createBeneficiaryGroup" extends="userLayout">
+		<put-attribute name="title" value="User : Create Beneficiary Group" />
+		<put-attribute name="body" value="/pages/CreateBeneficiaryGroup.jsp" />		
+	</definition>
+	
+	<definition name="continueBeneficiaryGroup" extends="userLayout">
+		<put-attribute name="title" value="User : Create Beneficiary Group" />
+		<put-attribute name="body" value="/pages/ContinueBeneficiaryGroup.jsp" />		
+	</definition>
+		
+	<definition name="confirmBeneficiaryGroup" extends="userLayout">
+		<put-attribute name="title" value="User : Create Beneficiary Group" />
+		<put-attribute name="body" value="/pages/SuccessBeneficiaryGroup.jsp" />		
+	</definition>
+	
+	<definition name="listBeneficiaryGroup" extends="userLayout">
+		<put-attribute name="title" value="User : Beneficiary Groups" />
+		<put-attribute name="body" value="/pages/ListBeneficiaryGroup.jsp" />		
+	</definition>
+	
+	<definition name="BillPayment" extends="userLayout">
+		<put-attribute name="title" value="User : Bill Payment" />
+		<put-attribute name="body" value="/pages/BillPayment.jsp" />		
+	</definition>
+	
+	 <definition name="BillPaymentHistory" extends="userLayout">
+		<put-attribute name="title" value="User : Bill Payment History" />
+		<put-attribute name="body" value="/pages/BillPaymentHistory.jsp" />		
+	</definition>
+	
+	 <definition name="AccountBalanceTransferGroup" extends="userLayout">
+		<put-attribute name="title" value="User : Account Balance Transfer Group" />
+		<put-attribute name="body" value="/pages/AccountBalanceTransferGroup.jsp" />		
+	</definition>
+	
+</tiles-definitions>
+
+

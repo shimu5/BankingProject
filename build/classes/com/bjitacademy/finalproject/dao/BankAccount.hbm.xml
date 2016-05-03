@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bjitacademy.finalproject.domains" default-lazy="false" >
+	<class name="BankAccount" table="BankAccount" dynamic-update="true" dynamic-insert="true">
+		<id name="bankAccNumber" type="integer" column="BankAccNumber">
+			<generator class="sequence">
+				<param name="sequence">S_BankAccount_id</param>
+			</generator>					
+		</id>		
+		
+		<property name="bankAccountType" column="BankAccountType" type="integer" />
+		<property name="accountHolderName" column="AccountHolderName" type="string" />
+		<property name="fatherName" column="FatherName" type="string" />
+		<property name="motherName" column="MotherName" type="string" />
+		<property name="permanentAddress" column="PermanentAddress" type="string" />
+		<property name="currentAddress" column="CurrentAddress" type="string" />
+		<property name="contactNumber" column="ContactNumber" type="string" />
+		<property name="emailAddress" column="EmailAddress" type="string" />
+		<property name="occupation" column="Occupation" type="string" />
+		<property name="nid_pin" column="NID_PN" type="string" />
+		<property name="currency" column="Currency" type="string" />
+		<property name="yearlyIncome" column="YearlyIncome" type="big_decimal" />
+		<property name="balance" column="Balance" type="big_decimal" />
+		<property name="activeStatus" column="ActiveStatus" type="string" />		
+		<one-to-one name="userAccount" class="UserAccount" cascade="save-update" />			
+	</class>	
+	
+	<class name="BankAccountInterest" table="BankAccount" dynamic-update="true" >
+		<id name="bankAccNumber" type="integer" column="BankAccNumber">
+			<generator class="sequence">
+				<param name="sequence">S_BankAccount_id</param>
+			</generator>					
+		</id>				
+		<property name="bankAccountType" column="BankAccountType" type="integer" />
+		<property name="accountHolderName" column="AccountHolderName" type="string" />
+		<property name="fatherName" column="FatherName" type="string" />
+		<property name="motherName" column="MotherName" type="string" />
+		<property name="permanentAddress" column="PermanentAddress" type="string" />
+		<property name="currentAddress" column="CurrentAddress" type="string" />
+		<property name="contactNumber" column="ContactNumber" type="string" />
+		<property name="emailAddress" column="EmailAddress" type="string" />
+		<property name="occupation" column="Occupation" type="string" />
+		<property name="nid_pin" column="NID_PN" type="string" />
+		<property name="currency" column="Currency" type="string" />
+		<property name="yearlyIncome" column="YearlyIncome" type="big_decimal" />
+		<property name="balance" column="Balance" type="big_decimal" />
+		<property name="activeStatus" column="ActiveStatus" type="string" />				
+		<many-to-one class="InterestRate" insert="false" name="interestRate" update="false" column="bankAccountType" />		
+	</class>	
+	
+	<class name="BankAccountLedger" table="BankAccount"  dynamic-update="true" dynamic-insert="true">
+		<id name="bankAccNumber" type="integer" column="BankAccNumber">
+			<generator class="sequence">
+				<param name="sequence">S_BankAccount_id</param>
+			</generator>					
+		</id>				
+		<property name="bankAccountType" column="BankAccountType" type="integer" />
+		<property name="accountHolderName" column="AccountHolderName" type="string" />
+		<property name="fatherName" column="FatherName" type="string" />
+		<property name="motherName" column="MotherName" type="string" />
+		<property name="permanentAddress" column="PermanentAddress" type="string" />
+		<property name="currentAddress" column="CurrentAddress" type="string" />
+		<property name="contactNumber" column="ContactNumber" type="string" />
+		<property name="emailAddress" column="EmailAddress" type="string" />
+		<property name="occupation" column="Occupation" type="string" />
+		<property name="nid_pin" column="NID_PN" type="string" />
+		<property name="currency" column="Currency" type="string" />
+		<property name="yearlyIncome" column="YearlyIncome" type="big_decimal" />
+		<property name="balance" column="Balance" type="big_decimal" />
+		<property name="activeStatus" column="ActiveStatus" type="string" />		
+			
+		<list name="accountledgers" table="LedgerAccount"
+               lazy="true" >
+            <key column="bankAccNumber"></key>  
+	        <index column="ledgerId"></index>  
+            <one-to-many class="LedgerAccount" />
+        </list>						
+	</class>
+	
+	<class name="BankAccountBeneficiary" table="BankAccount"  dynamic-update="true" dynamic-insert="true">
+		<id name="bankAccNumber" type="integer" column="BankAccNumber">
+			<generator class="sequence">
+				<param name="sequence">S_BankAccount_id</param>
+			</generator>					
+		</id>				
+		<property name="bankAccountType" column="BankAccountType" type="integer" />
+		<property name="accountHolderName" column="AccountHolderName" type="string" />
+		<property name="fatherName" column="FatherName" type="string" />
+		<property name="motherName" column="MotherName" type="string" />
+		<property name="permanentAddress" column="PermanentAddress" type="string" />
+		<property name="currentAddress" column="CurrentAddress" type="string" />
+		<property name="contactNumber" column="ContactNumber" type="string" />
+		<property name="emailAddress" column="EmailAddress" type="string" />
+		<property name="occupation" column="Occupation" type="string" />
+		<property name="nid_pin" column="NID_PN" type="string" />
+		<property name="currency" column="Currency" type="string" />
+		<property name="yearlyIncome" column="YearlyIncome" type="big_decimal" />
+		<property name="balance" column="Balance" type="big_decimal" />
+		<property name="activeStatus" column="ActiveStatus" type="string" />	
+		
+		<list name="benefList" table="Beneficiary"
+               lazy="true" >
+            <key column="userBankAccountNumber" ></key>   
+	        <index column="beneficiaryId"></index>  
+            <one-to-many class="Beneficiary" />
+        </list>
+       
+	</class>	
+
+</hibernate-mapping>

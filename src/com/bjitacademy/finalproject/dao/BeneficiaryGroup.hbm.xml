@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bjitacademy.finalproject.domains" default-lazy="false">
+	 <class name="BeneficiaryGroup" table="BeneficiaryGroup"  dynamic-update="true" dynamic-insert="true">				
+		<composite-id>
+            <key-property name="aliasName" column="AliasName" />            
+            <key-property name="groupName" type="string" column="GroupName"/>
+        </composite-id> 
+       
+       <!--  <map name="beneficiaries" inverse="true" lazy="true" fetch="select" cascade="delete" >
+			<key column="aliasName"/>
+			<index column="groupName" type="string"></index> 
+			<many-to-many class="Beneficiary"/>
+        </map >-->      
+	</class>
+	
+	<!-- <class name="BeneficiaryGroup" table="BeneficiaryGroup"  dynamic-update="true" dynamic-insert="true">				
+		<composite-id>
+            <key-property name="aliasName"  type="string" column="AliasName" />
+            <key-property name="groupName" type="string" column="GroupName"/>
+        </composite-id> 
+        <set name="beneficiaries" inverse="true" lazy="true" fetch="select" cascade="delete" >
+			  <key>
+		        <column name="aliasName"/>
+		        <column name="groupName"/>
+      		 </key>			
+			<one-to-many class="Beneficiary"/>
+        </set>     
+	</class>	-->
+</hibernate-mapping>
