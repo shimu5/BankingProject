@@ -1,4 +1,5 @@
 # Demo Banking software
-## User Registration
-## Cash Deposit
-## Cash withdrawal
+### Add new User
+### User Registration
+### Cash Deposit
+### Cash withdrawal
