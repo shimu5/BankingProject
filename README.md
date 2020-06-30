@@ -1,5 +1,8 @@
 # Demo Banking software
-### Add new User
-### User Registration
-### Cash Deposit
-### Cash withdrawal
+### Author : Shamima Akhter
+### Development Technologies: JEE, Spring , Struts2.0, Hibernate
+
+##### Add new User
+#### User Registration
+#### Cash Deposit
+#### Cash withdrawal
