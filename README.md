@@ -1,6 +1,6 @@
 # Demo Banking software
 ### Author : Shamima Akhter
-### Development Technologies: JEE, Spring , Struts2.0, Hibernate
+### Development Technologies: JEE, JSP, Spring , Struts2.0, Hibernate
 
 ##### Add new User
 #### User Registration
